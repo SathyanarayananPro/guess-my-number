@@ -117,3 +117,16 @@ h1 {
 .label-score {
   margin-bottom: 2rem;
 }
+.error {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+  padding-bottom: 25px;
+}
+#errorMsg {
+  color: red;
+  font-size: 1.2rem;
+  display: none; /* Initially hidden */
+  padding-top: 10px;
+  margin-top: 10px;
+}

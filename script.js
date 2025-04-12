@@ -5,7 +5,7 @@ let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highscore = 0;
 const guessbutton = document.querySelector('.check');
-console.log(guessbutton);
+
 const displayMessage = function (message) {
   document.querySelector('.message').textContent = message;
 };
@@ -19,12 +19,12 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.score').textContent = score;
   document.querySelector('.guess').value = '';
   guessbutton.disabled = false;
+  document.querySelector('.guess').disabled = false;
   guessbutton.style.cursor = 'pointer';
 });
-console.log(`outside all ${secretNumber}`);
-document.querySelector('.check').addEventListener('click', function () {
+function guessing() {
   const guess = Number(document.querySelector('.guess').value);
-  console.log(guess);
+
   if (!guess) {
     displayMessage('⛔No Number');
   } else if (guess === secretNumber) {
@@ -33,6 +33,9 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
     guessbutton.disabled = true;
+    document.querySelector('.guess').disabled = true;
+    document.querySelector('.again').focus();
+
     guessbutton.style.cursor = 'not-allowed';
     if (highscore < score) {
       highscore = score;
@@ -46,10 +49,37 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = score;
     } else {
       displayMessage('💥You Lose the Game');
-
+      document.querySelector('body').style.backgroundColor = '#b53645';
       guessbutton.disabled = true;
       guessbutton.style.cursor = 'not-allowed';
       document.querySelector('.score').textContent = 0;
+      document.querySelector('.guess').disabled = true;
+      document.querySelector('.again').focus();
     }
   }
+  document.querySelector('.guess').value = '';
+  document.querySelector('.guess').focus();
+}
+document.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    guessing();
+  } else {
+    document.querySelector('.guess').focus();
+  }
+});
+document.querySelector('.check').addEventListener('click', guessing);
+document.querySelector('.guess').addEventListener('input', e => {
+  const input = e.target;
+  let val = input.value.replace(/\D/g, '');
+  if (Number(val) <= 0) {
+    val = '';
+    document.getElementById('errorMsg').style.display = 'block';
+  } else if (Number(val) >= 20) {
+    val = '';
+
+    document.getElementById('errorMsg').style.display = 'block';
+  } else {
+    document.getElementById('errorMsg').style.display = 'none';
+  }
+  input.value = val;
 });
