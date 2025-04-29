@@ -74,7 +74,7 @@ document.querySelector('.guess').addEventListener('input', e => {
   if (Number(val) <= 0) {
     val = '';
     document.getElementById('errorMsg').style.display = 'block';
-  } else if (Number(val) >= 20) {
+  } else if (Number(val) > 20) {
     val = '';
 
     document.getElementById('errorMsg').style.display = 'block';
